@@ -1,18 +1,43 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>org.jetbrains.plugins.template</id>
-    <name>Template</name>
-    <vendor>JetBrains</vendor>
+    <id>org.vitalii.vorobii.st-js-helper</id>
+    <name>ST-JS Helper</name>
+    <vendor>Vitalii Vorobii</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.idea.maven</depends>
+
+    <actions>
+        <action id="RecompileStJsForCorrespondingModule"
+                class="RecompileStJsForCorrespondingModule"
+                text="Recompile ST-JS in Current Module"
+                description="Recompile ST-JS in current module">
+            <keyboard-shortcut
+                    first-keystroke="control alt A"
+                    keymap="$default"
+            />
+        </action>
+
+        <action id="RecompileStjsForWholeProjectAction"
+                class="RecompileStjsForWholeProjectAction"
+                text="Recompile ST-JS for Whole Project"
+                description="Recompile ST-JS for whole project">
+            <keyboard-shortcut
+                    first-keystroke="control alt B"
+                    keymap="$default"
+            />
+        </action>
+    </actions>
+
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="org.jetbrains.plugins.template.services.MyApplicationService"/>
-        <projectService serviceImplementation="org.jetbrains.plugins.template.services.MyProjectService"/>
+        <projectService serviceImplementation="StjsConfigService"/>
+        <notificationGroup id="st-js-notification-group" displayType="BALLOON" />
     </extensions>
 
     <applicationListeners>
-        <listener class="org.jetbrains.plugins.template.listeners.MyProjectManagerListener"
+        <listener class="StJsProjectRecognizer"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
+
 </idea-plugin>
